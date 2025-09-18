@@ -23,8 +23,6 @@ int evaluate_expression(char * arr, int len) {
 
             --i;
 
-            printf("Found number: %d\n", num);
-
             push_int(&numbers, num);
 
         } else if (
@@ -33,7 +31,6 @@ int evaluate_expression(char * arr, int len) {
             item == '*' ||
             item == '/'
         ) {
-            printf("%c is a operator\n", item);
 
             while (!is_empty_char(&operations) && precedence(peek_char(&operations)) >= precedence(item)) {
                 // We must evalute that operation now.
@@ -43,6 +40,7 @@ int evaluate_expression(char * arr, int len) {
                 int second_num = pop_int(&numbers);
 
                 int result = apply_operator(first_num, second_num, op);
+                printf("Doing operation %d %c %d = %d\n", first_num, op, second_num, result);
 
                 push_int(&numbers, result);
             }
@@ -60,6 +58,7 @@ int evaluate_expression(char * arr, int len) {
         int second_num = pop_int(&numbers);
 
         int result = apply_operator(first_num, second_num, op);
+        printf("Doing operation %d %c %d = %d\n", first_num, op, second_num, result);
 
         push_int(&numbers, result);
     }
