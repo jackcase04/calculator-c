@@ -1,21 +1,21 @@
 #include <stdio.h>
-#include <stdint.h>
+#include <string.h>
 
 int main() {
 
-    int x = 6756;
+    char expression[256];
+    printf("Enter an expression: ");
+    fgets(expression, sizeof(expression), stdin);
+    // This basically just replaces the newline with null terminator
+    expression[strcspn(expression, "\n")] = '\0';
 
-    printf("X is: %d\n", x);
+    printf("You entered: %s\n", expression);
+    int len = strlen(expression);
+    printf("Size of expression: %zu\n", strlen(expression));
 
-    int result = 0;
-
-    while (x > 0) {
-        int digit = x % 10;
-        result += digit;
-        x /= 10;
+    for (int i = 0; i < len; ++i) {
+        printf("%c\n", expression[i]);
     }
-
-    printf("Summation of all X's digits: %d\n", result);
     
     return 0;
 }
