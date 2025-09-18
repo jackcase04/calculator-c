@@ -1,6 +1,12 @@
 #include "calculator.h"
 
-void evaluate_expression(char * arr, int len) {
+int evaluate_expression(char * arr, int len) {
+    IntStack numbers;
+    CharStack operations;
+
+    init_int_stack(&numbers);
+    init_char_stack(&operations);
+    
     int i = 0;
 
     while (i < len) {
@@ -18,6 +24,9 @@ void evaluate_expression(char * arr, int len) {
             --i;
 
             printf("Found number: %d\n", num);
+
+            push_int(&numbers, num);
+
         } else if (
             item == '+' ||
             item == '-' ||
@@ -25,8 +34,56 @@ void evaluate_expression(char * arr, int len) {
             item == '/'
         ) {
             printf("%c is a operator\n", item);
+
+            while (!is_empty_char(&operations) && precedence(peek_char(&operations)) >= precedence(item)) {
+                // We must evalute that operation now.
+                int op = pop_char(&operations);
+
+                int first_num = pop_int(&numbers);
+                int second_num = pop_int(&numbers);
+
+                int result = apply_operator(first_num, second_num, op);
+
+                push_int(&numbers, result);
+            }
+
+            push_char(&operations, item);
         }
 
         ++i;
     }
+
+    while (!is_empty_char(&operations)) {
+        int op = pop_char(&operations);
+
+        int first_num = pop_int(&numbers);
+        int second_num = pop_int(&numbers);
+
+        int result = apply_operator(first_num, second_num, op);
+
+        push_int(&numbers, result);
+    }
+
+    return pop_int(&numbers);
+}
+
+int precedence(char op) {
+    if (op == '*' || op == '/') return 2;
+    if (op == '+' || op == '-') return 1;
+    return 0;
+}
+
+int apply_operator(int a, int b, char op) {
+    switch(op) {
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+        case '*':
+            return a * b;
+        case '/':
+            return a / b;
+    }
+
+    return 0;
 }

@@ -12,7 +12,7 @@ int main() {
     printf("You entered: %s\n", expression);
     int len = strlen(expression);
 
-    evaluate_expression(expression, len);
+    printf("Result is: %d\n", evaluate_expression(expression, len));
     
     return 0;
 }
