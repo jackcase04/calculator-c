@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <string.h>
+#include <calculator.h>
 
 int main() {
 
@@ -11,11 +11,8 @@ int main() {
 
     printf("You entered: %s\n", expression);
     int len = strlen(expression);
-    printf("Size of expression: %zu\n", strlen(expression));
 
-    for (int i = 0; i < len; ++i) {
-        printf("%c\n", expression[i]);
-    }
+    evaluate_expression(expression, len);
     
     return 0;
 }
