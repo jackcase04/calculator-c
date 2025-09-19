@@ -46,6 +46,27 @@ int evaluate_expression(char * arr, int len) {
             }
 
             push_char(&operations, item);
+        } else if (item == '(') {
+            char expression[256];
+
+            ++i;
+            int j = 0;
+            item = arr[i];
+
+            while (item != ')' && j < 255) {
+                
+                expression[j] = item;
+                ++i;
+                ++j;
+                item = arr[i];
+            }
+
+            expression[j] = '\0';
+
+            int len = strlen(expression);
+            int result = evaluate_expression(expression, len);
+
+            push_int(&numbers, result);
         }
 
         ++i;

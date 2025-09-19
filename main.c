@@ -1,4 +1,3 @@
-#include <string.h>
 #include <calculator.h>
 
 int main() {
