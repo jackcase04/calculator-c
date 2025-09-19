@@ -62,11 +62,11 @@ int evaluate_expression(char * arr, int * i, int len) {
     while (!is_empty_char(&operations)) {
         int op = pop_char(&operations);
 
-        int first_num = pop_int(&numbers);
-        int second_num = pop_int(&numbers);
+        int a = pop_int(&numbers);
+        int b = pop_int(&numbers);
 
-        int result = apply_operator(first_num, second_num, op);
-        printf("Doing operation %d %c %d = %d\n", first_num, op, second_num, result);
+        int result = apply_operator(b, a, op);
+        printf("Doing operation %d %c %d = %d\n", b, op, a, result);
 
         push_int(&numbers, result);
     }
