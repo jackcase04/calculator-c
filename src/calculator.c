@@ -1,27 +1,25 @@
 #include "calculator.h"
 
-int evaluate_expression(char * arr, int len) {
+int evaluate_expression(char * arr, int * i, int len) {
     IntStack numbers;
     CharStack operations;
 
     init_int_stack(&numbers);
     init_char_stack(&operations);
-    
-    int i = 0;
 
-    while (i < len) {
-        char item = arr[i];
+    while (*i < len) {
+        char item = arr[*i];
 
         if (item >= '0' && item <= '9') {
             int num = 0;
 
             while (item >= '0' && item <= '9') {
                 num = num * 10 + (item - '0');
-                ++i;
-                item = arr[i];
+                (*i)++;
+                item = arr[*i];
             }
 
-            --i;
+            (*i)--;
 
             push_int(&numbers, num);
 
@@ -47,29 +45,18 @@ int evaluate_expression(char * arr, int len) {
 
             push_char(&operations, item);
         } else if (item == '(') {
-            char expression[256];
 
-            ++i;
-            int j = 0;
-            item = arr[i];
-
-            while (item != ')' && j < 255) {
-                
-                expression[j] = item;
-                ++i;
-                ++j;
-                item = arr[i];
-            }
-
-            expression[j] = '\0';
-
-            int len = strlen(expression);
-            int result = evaluate_expression(expression, len);
-
+            (*i)++;
+            // Evaluate inside the parantheses as a new expression with new stacks
+            // until we see the closing parenthese
+            int result = evaluate_expression(arr, i, len);
             push_int(&numbers, result);
+        } else if (item == ')') {
+            // Here is where the recursion will end
+            break;
         }
 
-        ++i;
+        (*i)++;
     }
 
     while (!is_empty_char(&operations)) {

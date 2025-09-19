@@ -7,7 +7,7 @@
 
 #include "stack.h"
 
-int evaluate_expression(char * arr, int len);
+int evaluate_expression(char * arr, int * i, int len);
 
 int precedence(char op);
 

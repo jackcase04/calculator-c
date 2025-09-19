@@ -10,7 +10,8 @@ int main() {
 
     int len = strlen(expression);
 
-    printf("Result is: %d\n", evaluate_expression(expression, len));
+    int i = 0;
+    printf("Result is: %d\n", evaluate_expression(expression, &i, len));
     
     return 0;
 }
